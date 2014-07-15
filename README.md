@@ -35,5 +35,6 @@ DSLab_Algo_Seminar
     
     중요! https://github.com 에서 회원 가입하고 이메일 인증한 후 아이디 조규남에게 알려 주기!
     
-    소스 관리 및 태스트 관리는 https://github.com/mystous/DSLab_Algo_Seminar 에서 진행할 예정임(예비 모임 때 설명할 예정)
+    소스 관리 및 태스트 관리는 https://github.com/mystous/DSLab_Algo_Seminar 에서 진행할 예정임
+    (예비 모임 때 설명할 예정)
     
