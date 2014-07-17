@@ -1,11 +1,9 @@
-7/15 2Â÷ ¼¼¹Ì³ª ÁÖÁ¦
+7/15 2ì°¨ ì„¸ë¯¸ë‚˜ ì£¼ì œ
 
- º¸±Û °ÔÀÓ - ±èÀ¯Áø
+ ë³´ê¸€ ê²Œìž„ - ê¹€ìœ ì§„
+ ì†Œí’ - ê¹€í˜¸ìŠ¹
+ ê²Œìž„íŒ ë®ê¸° - ì¡°ê·œë‚¨
+ ì‹œê³„ ë§žì¶”ê¸° - ì¡°ìŠ¹ìš°
+ ì¿¼ë“œ íŠ¸ë¦¬ ë’¤ì§‘ê¸° - ê¹€í˜œë¯¼
 
- ¼ÒÇ³ - ±èÈ£½Â
-
- °ÔÀÓÆÇ µ¤±â - Á¶±Ô³²
-
- ½Ã°è ¸ÂÃß±â - Á¶½Â¿ì
-
- http://book.algospot.com/problems.html ¿¡¼­ ¹®Á¦Ç®±â ÁøÇà ÈÄ 2Â÷½Ã Æú´õ¿¡ .cpp È®ÀåÀÚ·Î ¾÷·Îµå ¹Ù¶÷
+ http://book.algospot.com/problems.html ì—ì„œ ë¬¸ì œí’€ê¸° ì§„í–‰ í›„ 2ì°¨ì‹œ í´ë”ì— .cpp í™•ìž¥ìžë¡œ ì—…ë¡œë“œ ë°”ëžŒ
