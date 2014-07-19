@@ -1,4 +1,4 @@
-DSLab_Algo_Seminar
+﻿DSLab_Algo_Seminar
 ==================
 
 고려대학교 분산슈퍼컴퓨팅랩 알고리즘 세미나
@@ -8,7 +8,7 @@ DSLab_Algo_Seminar
      보글 게임 - 김유진
      소풍 - 김호승
      게임판 덮기 - 조규남
-     시계 맞추기 - 조승우
+     시계 맞추기 - 조창우
      쿼드 트리 뒤집기 - 김혜민
      
      http://book.algospot.com/problems.html 에서 문제풀기 진행 후 2차시 폴더에 .cpp 확장자로 업로드 바람
