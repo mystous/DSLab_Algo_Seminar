@@ -30,9 +30,11 @@ boolean char_return(void)
 
 ->수정
 
-	char *str = (char*)malloc(sizeof(char)*20);
-	cin>>*str;
-	free(str);
+	char* arr=(char*)malloc(sizeof(char)*20);
+	gets(arr);     //input string : this exam is very easy!
+
+	arr[20]='\0';
+	puts(arr);
 
 
 오답 6.
