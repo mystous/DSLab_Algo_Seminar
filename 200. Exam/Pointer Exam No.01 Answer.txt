@@ -1,0 +1,26 @@
+1. 4Byte
+
+2. 포인터가 가리키는 데이터의 사이즈가 각각 다르기 때문에
+
+3. 
+
+boolean char_return()
+{
+	char arr[16];
+	char *arr_p;
+
+	arr_p = arr;
+	
+	if(arr_p==arr)
+	return 	TRUE;
+
+}
+
+4. 동작이 가능하다  pszBuffer는 1차원 배열로 볼 수 있기 때문
+   pszBuffer[1~26] 에는 알파벳이 순서대로 저장될 것이다
+
+
+
+5.6.
+
+아... 모르겠습니다
