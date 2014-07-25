@@ -1,19 +1,23 @@
 정답 1. 4Byte 
 
 보완 2. 포인터가 가리키는 데이터의 사이즈가 각각 다르기 때문에(그래서??????)
+
+수정-> 	포인터에 데이터 사이즈에 따라 다음에 가리킬 주소값을 찾아낼 수 있다
+	예를 들어 int형 포인터는 4바이트씩 넘어가고 char 와 double은 이와 다르므로
+	포인터에도 가리킬 데이터 사이즈에 따른 형태가 필요하다
    
 
 오답 3. 
 
-boolean char_return()
+boolean char_return(void)
 {
-	char arr[16];
-	char *arr_p;
-
-	arr_p = arr;
+	char *arr = (char*)malloc(sizeof(char)*16);
 	
-	if(arr_p==arr)
-	return 	TRUE;
+	if(arr==NULL)
+		return -1;
+		
+	else
+		return true;
 
 }
 
@@ -24,8 +28,11 @@ boolean char_return()
 
 오답 5.
 
-	char *name;
-	name = "This is very easy exam!";
+->수정
+
+	char *str = (char*)malloc(sizeof(char)*20);
+	cin>>*str;
+	free(str);
 
 
 오답 6.
@@ -37,3 +44,5 @@ boolean char_return()
 	arr[i] = (char *)malloc(sizeof(char)+1);
 	
 오답 7. 
+->수정
+	김호승???
