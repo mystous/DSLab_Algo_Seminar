@@ -22,7 +22,7 @@ boolean char_return(void)
 }
 
 -> 수정버전
-char* char_return(void)
+boolean char_return(char* arr_p)
 {
 	char *arr = (char*)malloc(sizeof(char)*16);
 	
@@ -30,7 +30,8 @@ char* char_return(void)
 		return -1;
 		
 	else
-		return arr;
+	arr_p=arr
+	return true;
 
 }
 
