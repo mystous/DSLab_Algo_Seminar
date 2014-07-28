@@ -29,9 +29,10 @@ boolean char_return(char* arr_p)
 	if(arr==NULL)
 		return -1;
 		
-	else
-	arr_p=arr
+	else{
+	arr_p=arr;
 	return true;
+	}
 
 }
 
