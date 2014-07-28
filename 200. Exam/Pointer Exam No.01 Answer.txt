@@ -66,3 +66,37 @@ boolean char_return(char* arr_p)
 오답(잘 생각해 보길...) 7. 
 ->수정
 	김호승???
+
+
+3, 5번 참고
+
+	#include "stdafx.h"
+	#include <string>
+	
+	#define STRING_		"This is very easy exam!"
+	
+	bool alloc(char **pszText)
+	{
+		*pszText = (char*)malloc(strlen(STRING_) + 1);
+	
+		if (NULL == *pszText)
+			return false;
+	
+		strcpy(*pszText, STRING_);
+	
+		return true;
+	}
+	
+	int _tmain(int argc, _TCHAR* argv[])
+	{
+	
+		char		*pStr = NULL;
+	
+		if (alloc(&pStr))
+			printf("%s\n", pStr);
+		else
+			printf("Error!\n");
+	
+		free(pStr);
+		return 0;
+	}
