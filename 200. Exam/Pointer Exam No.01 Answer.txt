@@ -21,6 +21,19 @@ boolean char_return(void)
 
 }
 
+char* char_return(void)
+{
+	char *arr = (char*)malloc(sizeof(char)*16);
+	
+	if(arr==NULL)
+		return -1;
+		
+	else
+		return arr;
+
+}
+
+
 정답 4. 동작이 가능하다  pszBuffer는 1차원 배열로 볼 수 있기 때문
    pszBuffer[1~26] 에는 알파벳이 순서대로 저장될 것이다
 
