@@ -7,7 +7,7 @@
 	포인터에도 가리킬 데이터 사이즈에 따른 형태가 필요하다
    
 
-오답(함수내에서 잡은 메모리가 함수 밖으로 나가지 않게 되어 있음) 3. 
+3. 오답(함수내에서 잡은 메모리가 함수 밖으로 나가지 않게 되어 있음) 
 
 boolean char_return(void)
 {
@@ -21,6 +21,7 @@ boolean char_return(void)
 
 }
 
+-> 수정버전
 char* char_return(void)
 {
 	char *arr = (char*)malloc(sizeof(char)*16);
@@ -39,7 +40,7 @@ char* char_return(void)
 
 
 
-오답(문자열 크기와 메모리 크기가 일치하지 않음) 5.
+5. 오답(문자열 크기와 메모리 크기가 일치하지 않음)
 
 ->수정
 
