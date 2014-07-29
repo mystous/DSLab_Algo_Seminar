@@ -56,16 +56,36 @@ boolean char_return(char* arr_p)
 오답 6.
 
 
-->수정
-	//matrix[5][10]
-	char **matrix = (char**)malloc((5)*sizeof(char*));
+#include "stdafx.h"
+#include <iostream>
 
-	for(int i = 0;i<5;i++)
-		matrix[i] = (char*)malloc((10)*sizeof(char));
+using namespace std;
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	int i =0;
+	char **arr = NULL;
+	arr = (char**)malloc(sizeof(char*)*10);
+	for(i=0; i< 10; i++)
+	{
+		//*(arr+i) = (char*)malloc(sizeof(char)*10);
+		arr[i] = (char*)malloc(sizeof(char)*10);
 	
-오답(잘 생각해 보길...) 7. 
+	}
+
+	arr[0] = "helloooooooooo";
+
+	puts(arr[0]);
+
+	return 0;
+}
+
+
+	
+7. 오답(잘 생각해 보길...)
 ->수정
-	김호승???
+	김혜민
 
 
 3, 5번 참고
