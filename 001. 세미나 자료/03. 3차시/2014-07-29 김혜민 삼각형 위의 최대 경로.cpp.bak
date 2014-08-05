@@ -57,14 +57,8 @@ int main()
 			if(j>i) continue;
 			int d = (j==0)? 0 : triangle[i][j] + cash[i-1][j-1];
 			int t = triangle[i][j] + cash[i-1][j];
-
-
-			//경로 크기비교
 			cash[i][j] = d > t ? d:t;
-			
-			if(i == test_line-1) 
-				if(cash[i][j] > max) 
-				max = cash[i][j];
+			if(i == test_line-1) if(cash[i][j] > max) max = cash[i][j];
 		
 		}
 	
