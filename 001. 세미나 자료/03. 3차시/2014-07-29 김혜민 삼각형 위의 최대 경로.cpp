@@ -35,14 +35,14 @@ int main()
 	
 	if(test_line<=1)
 	{
-		cout<<"2ÀÌ»óÀÇ Á¤¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä";
+		cout<<"2ì´ìƒì˜ ì •ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš”";
 		puts(" ");
 		return -1;
 
 	}
 	
 
-	//»ï°¢Çü ÀÔ·Â
+	//ì‚¼ê°í˜• ì…ë ¥
 	for(i=0;i<test_line;i++)
 		for(j=0;j<i+1;j++)
 			cin>>triangle[i][j];
@@ -55,11 +55,11 @@ int main()
 		for(j=0;j<test_line;j++)
 		{
 			if(j>i) continue;
-			int d = (j==0)? 0 : triangle[i][j] + cash[i-1][j-1];
-			int t = triangle[i][j] + cash[i-1][j];
+			int d = (j==0)? 0 : triangle[i][j] + cash[i-1][j-1];    //ì˜¤ë¥¸ìª½ í•˜ë‹¨ê³¼ì˜ í•©
+			int t = triangle[i][j] + cash[i-1][j];                  //í•˜ë‹¨ê³¼ì˜ í•©
 
 
-			//°æ·Î Å©±âºñ±³
+			//ê²½ë¡œ í¬ê¸°ë¹„êµ
 			cash[i][j] = d > t ? d:t;
 			
 			if(i == test_line-1) 
@@ -71,7 +71,7 @@ int main()
 	}
 	
 
-	cout<<"ÃÖ´ë°ªÀº :"<<max<<endl;
+	cout<<"ìµœëŒ€ê°’ì€ :"<<max<<endl;
 
 	}
 		
