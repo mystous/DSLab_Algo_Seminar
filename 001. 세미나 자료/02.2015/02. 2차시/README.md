@@ -16,10 +16,11 @@
         - 소스코드 이름: 20150216_[본인 영문명, 별명이나 닉네임 안됨]_Baseball.c[or cpp]
         - 조건 사항
                 matrix.dat와 vector_input.dat는 형식이나 파일 명이 올바르지 않을 수 있음
-                matrix의 데이터 중 저정되어 있지 않는 element는 없음
+                matrix의 데이터 중 저정되어 있지 않는 element 존재 가능(이때는 계산 안함)
                 m과 n의 크기는 제한이 없음
                 Row, Column, Real, Imaginary 모두 double 형
                 Code는 모두 ansi c 규격에 맞게 작성
+                Row index, Column index는 Zero-based
                 Program logic을 PPT 파일로 별도로 제작
         - 판단 방법
                 파일 읽기 실패(실패시 마다, -5)
