@@ -30,5 +30,13 @@
                 결과 파일 저정 형식(오류로 저장시 -5)
                 Segment fault시(-10)
                 무한 루프(발생시 마다, -5)
-        - 시간 측정 함수 제공 예정
+        - 시간 측정 함수 Reference/TimeMeasurement.h, .cpp를 그대로 사용하거나 참고하여 작성
+                시간은 측정은 아래 두가지 출력
+                   > Matrix, Vector 파일 읽기 시작해서 다 읽었을때까지(예외 처리 포함) 측정하여 화면에 출력
+                   > Matrix Vector multiplier 시작과 종료 측정하여 화면에 출력
+                   > ex     
+                           start_time_measurement(); 
+                           // Do something
+                           end_time_measurement(); // 시각이 자동 출력됨
+                
 
