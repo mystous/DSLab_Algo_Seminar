@@ -43,7 +43,11 @@ int main(){
 		//printf("%f, %f\n", vector.real, vector.imag);
 		calc(&matrix, &vector, &result);
 		//printf("%f, %f\n", result.real, result.imag);
-		if (detect_flag == true)	write_result(&result, &fp);
+		if (detect_flag == true){
+			write_result(&result, &fp);
+			result.real = 0;
+			result.imag = 0;
+		}
 	}
 
 
