@@ -72,34 +72,52 @@ int _tmain(int argc, _TCHAR* argv[])
 	FILE *mnMatrix;
 	FILE *n1Matrix;
 	FILE *outText;
-
+	FILE *vecOut;
 	fopen_s(&mnMatrix,"matrix.dat","rb");
 	fopen_s(&n1Matrix,"vector_input.dat","rb");
 	fopen_s(&outText,"out.txt","w");
+	fopen_s(&vecOut,"vector_output.dat","w");
 	start_time_measurement();
 
 	/****************매트릭스 크기**********************/
 	long int point;
 	point = 4*sizeof(double);
 	point = -point;
-	if(fseek(mnMatrix, point, SEEK_END)==-1)
+	if(_fseeki64(mnMatrix, point, SEEK_END)==-1)
 	{
 		printf("오류\n");
 	}
 
 
 	fread(mnBuffer,sizeof(double),4,mnMatrix);
-	printf("%f %f %f %f\n", mnBuffer[0], mnBuffer[1], mnBuffer[2], mnBuffer[3]);
 	matRow=mnBuffer[0];
 	matCol=mnBuffer[1];
-
-	/******************* 행 렬 검 사 **************************/
-	if(fseek(mnMatrix, 0, SEEK_SET)==-1)
+	int matSize = (int)(matRow+1) * (int)(matCol+1);
+	printf("매트릭스 사이즈 row %f col %f  row * col = %d\n", matRow, matCol, matSize);
+	int readSize=0;
+	int size=0;
+	if(_fseeki64(mnMatrix, 0, SEEK_SET)==-1)
 	{
 		printf("오류\n");
 	}
-	printf("double 크기 %d\n", sizeof(double));
-    
+	while(size=fread(mnBuffer,sizeof(double),MAX_SIZE,mnMatrix))
+	{
+		readSize+=size / 4 ;
+	}
+	if(readSize == matSize){
+		printf("매트릭스 크기 %d 빠진게 없습니다. \n", readSize); 
+	}else{
+		printf("매트릭스 요소가 빠졌습니다.\n");
+		exit(1);
+	}
+
+
+	/******************* 행 렬 검 사 **************************/
+	if(_fseeki64(mnMatrix, 0, SEEK_SET)==-1)
+	{
+		printf("오류\n");
+	}
+	
 	
 	//test    //vector 개수 
 	volatile int test=0;
@@ -116,29 +134,14 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 1;
 	}
 	
-	/// 행렬 값 확인
-	if(fseek(mnMatrix, 0, SEEK_SET)==-1)
-	{
-		printf("오류\n");
-	}
-	long size = sizeof(double)*((long)matCol+1)*(long)matRow*4;
-	//printf("%d\n", size);
-	fseek(mnMatrix, size ,SEEK_SET);
-	fread(mnBuffer,sizeof(double),4,mnMatrix);
-	//printf("행%f, 열%f 끝행%f\n", mnBuffer[0], mnBuffer[1], matRow);
-	if((mnBuffer[0] != matRow) || ((int)mnBuffer[1])!=0 )
-	{
-		printf("행렬안에 빠진게 있습니다.\n");
-		exit(1);
-	}
-
+	
 
 	/******************* 연 산 **************************/
-	if(fseek(mnMatrix, 0, SEEK_SET)==-1)
+	if(_fseeki64(mnMatrix, 0, SEEK_SET)==-1)
 	{
 		printf("seek 오류\n");
 	}
-	if(fseek(n1Matrix, 0, SEEK_SET)==-1)
+	if(_fseeki64(n1Matrix, 0, SEEK_SET)==-1)
 	{
 		printf("seek 오류\n");
 	}
@@ -158,12 +161,10 @@ int _tmain(int argc, _TCHAR* argv[])
 			int pos1 = 2*index1;
 			if(((pos0+2) > readCount0) && (readCount0!=0)){
 				index0=0;
-				pos0 = 4*index0+2;
+			 	pos0 = 4*index0+2;
 				readCount0=fread(mnBuffer,sizeof(double), MAX_SIZE, mnMatrix);
-				//fprintf(outText,"\n %f %f %f %f\n ", mnBuffer[0], mnBuffer[1], mnBuffer[2], mnBuffer[3]);
 			}
 			Complex T1(mnBuffer[pos0],mnBuffer[pos0+1]);
-			//fprintf(outText,"%d %d %f %f POS %d %d", j
 			index0++;
 				
 			if(((pos1+1) > readCount1) && (readCount1!=0) ){
@@ -177,10 +178,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			vecEle = vecEle + T;
 		}
 		index1=0;
-		fseek(n1Matrix, 0, SEEK_SET);
+		_fseeki64(n1Matrix, 0, SEEK_SET);
 		readCount1=fread(n1Buffer,sizeof(double), MAX_SIZE, n1Matrix);
 		
 		fprintf(outText,"%d %lf %lf \n", i,vecEle.getReal(), vecEle.getImage());
+		fprintf(vecOut,"%lf %lf \n",vecEle.getReal(), vecEle.getImage());
 	}
 	
 	end_time_measurement();
@@ -188,6 +190,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	fclose(mnMatrix);
 	fclose(n1Matrix);
 	fclose(outText);
+	fclose(vecOut);
 	return 0;
 }
 
