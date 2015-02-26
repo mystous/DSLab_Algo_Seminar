@@ -12,10 +12,10 @@ typedef struct MATRIX{
 }MATRIX;
 
 typedef struct VECTOR{
-	double real_temp;
-	double imag_temp;
 	double real;
 	double imag;
+	double writing_real;
+	double writing_imag;
 }VECTOR;
 
 typedef struct FILE_POINTERS{

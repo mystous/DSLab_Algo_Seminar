@@ -16,8 +16,8 @@ int main(){
 	FILE_POINTERS fp;
 	MATRIX matrix;
 	VECTOR vector, result;
-	result.real = 0;
-	result.imag = 0;
+	result.writing_real = 0;
+	result.writing_imag = 0;
 
 
 	//start a timer for measurment of process time
@@ -45,8 +45,6 @@ int main(){
 		//printf("%f, %f\n", result.real, result.imag);
 		if (detect_flag == true){
 			write_result(&result, &fp);
-			result.real = 0;
-			result.imag = 0;
 		}
 	}
 
@@ -88,8 +86,8 @@ void read_matrix(MATRIX *matrix, FILE_POINTERS *fp){
 	}
 }
 void read_vector(VECTOR *vector, FILE_POINTERS *fp){
-	fread(&vector->real_temp, 1, 8, fp->vector);
-	fread(&vector->imag_temp, 1, 8, fp->vector);
+	fread(&vector->real, 1, 8, fp->vector);
+	fread(&vector->imag, 1, 8, fp->vector);
 	//fread시 마지막에 두번쓰이는 것 필터링 -> 속력저하시킴
 	if (fread(&buf, 1, 1, fp->vector) == NULL){
 		if (vector_print_flag == false){
@@ -103,8 +101,8 @@ void read_vector(VECTOR *vector, FILE_POINTERS *fp){
 }
 
 void read_result(VECTOR *result, FILE_POINTERS *fp){
-	fread(&result->real_temp, 1, 8, fp->result);
-	fread(&result->imag_temp, 1, 8, fp->result);
+	fread(&result->real, 1, 8, fp->result);
+	fread(&result->imag, 1, 8, fp->result);
 	//fread시 마지막에 두번쓰이는 것 필터링		
 	if (fread(&buf, 1, 1, fp->result) == NULL){
 
@@ -115,18 +113,20 @@ void read_result(VECTOR *result, FILE_POINTERS *fp){
 }
 
 void write_result(VECTOR *result, FILE_POINTERS *fp){
-	fwrite(&result->real, 1, 8, fp->result);
-	fwrite(&result->imag, 1, 8, fp->result);
+	fwrite(&result->writing_real, 1, 8, fp->result);
+	fwrite(&result->writing_imag, 1, 8, fp->result);
+	result->writing_real = 0;
+	result->writing_imag = 0;
 }
 
 void calc(MATRIX *matrix, VECTOR *vector, VECTOR *result){
 	/*(M_real + iM_imag)*(V_real + iV_imag)
 	real = M_real*V_real - M_imag*V_imag
 	imag = M_real*V_imag + M_imag*V_real*/
-	result->real_temp = matrix->real * vector->real_temp - matrix->imag * vector->real_temp;
-	result->imag_temp = matrix->real * vector->imag_temp + matrix->imag * vector->imag_temp;
-	result->real += result->real_temp;
-	result->imag += result->imag_temp;
+	result->real = matrix->real * vector->real - matrix->imag * vector->imag;
+	result->imag = matrix->real * vector->imag + matrix->imag * vector->real;
+	result->writing_real += result->real;
+	result->writing_imag += result->imag;
 }
 
 void process_exit(FILE_POINTERS *fp){
@@ -150,7 +150,7 @@ void print_vector(VECTOR *vector, FILE_POINTERS *fp){
 	fseek(fp->vector, 0, SEEK_SET);
 	while (!feof(fp->vector)){
 		read_vector(vector, fp);
-		printf("%f, %f\n", vector->imag_temp, vector->imag_temp);
+		printf("%f, %f\n", vector->real, vector->imag);
 	}
 	vector_print_flag = false;
 }
@@ -160,7 +160,7 @@ void print_result(VECTOR *result, FILE_POINTERS *fp){
 	fp->result = fopen("result_multiply.dat", "rb");
 	while (!feof(fp->result)){
 		read_result(result, fp);
-		printf("%f, %f\n", result->imag_temp, result->imag_temp);
+		printf("%f, %f\n", result->real, result->imag);
 	}
 }
 
