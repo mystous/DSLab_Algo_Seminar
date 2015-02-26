@@ -14,8 +14,8 @@ typedef struct MATRIX{
 typedef struct VECTOR{
 	double real_temp;
 	double imag_temp;
-	//double real;
-	//double imag;
+	double real;
+	double imag;
 }VECTOR;
 
 typedef struct FILE_POINTERS{

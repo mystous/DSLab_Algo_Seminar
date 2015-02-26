@@ -16,6 +16,8 @@ int main(){
 	FILE_POINTERS fp;
 	MATRIX matrix;
 	VECTOR vector, result;
+	result.real = 0;
+	result.imag = 0;
 
 
 	//start a timer for measurment of process time
@@ -41,7 +43,7 @@ int main(){
 		//printf("%f, %f\n", vector.real, vector.imag);
 		calc(&matrix, &vector, &result);
 		//printf("%f, %f\n", result.real, result.imag);
-		//write_result(&result, &fp);
+		if (detect_flag == true)	write_result(&result, &fp);
 	}
 
 
@@ -109,8 +111,8 @@ void read_result(VECTOR *result, FILE_POINTERS *fp){
 }
 
 void write_result(VECTOR *result, FILE_POINTERS *fp){
-	fwrite(&result->real_temp, 1, 8, fp->result);
-	fwrite(&result->imag_temp, 1, 8, fp->result);
+	fwrite(&result->real, 1, 8, fp->result);
+	fwrite(&result->imag, 1, 8, fp->result);
 }
 
 void calc(MATRIX *matrix, VECTOR *vector, VECTOR *result){
@@ -119,7 +121,8 @@ void calc(MATRIX *matrix, VECTOR *vector, VECTOR *result){
 	imag = M_real*V_imag + M_imag*V_real*/
 	result->real_temp = matrix->real * vector->real_temp - matrix->imag * vector->real_temp;
 	result->imag_temp = matrix->real * vector->imag_temp + matrix->imag * vector->imag_temp;
-
+	result->real += result->real_temp;
+	result->imag += result->imag_temp;
 }
 
 void process_exit(FILE_POINTERS *fp){
