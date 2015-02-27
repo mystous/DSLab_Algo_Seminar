@@ -10,7 +10,7 @@
 
      
      Matrix Vector Multiplyer
-        - 소스코드 이름: 20150216_[본인 영문명, 별명이나 닉네임 안됨]_Baseball.c[or cpp]
+        - 소스코드 이름: yyyymmdd_[본인 영문명, 별명이나 닉네임 안됨]_[설명].c[or cpp]
         - 시간 측정 결과 파일 작성(형식 자유)
         - 조건 사항
                 지금 만들어진 소스를 병렬화 할것(MPI, Multi Thread, GPGPU)
