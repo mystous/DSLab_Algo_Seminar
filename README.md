@@ -2,6 +2,13 @@
 ==================
 고려대학교 분산슈퍼컴퓨팅랩 C/C++ 세미나
 
+3/6 3차 세미나
+
+    주제
+     C/C++ Syntax overview(황두현)
+     Matrix Vector Multiplyer(병렬처리)
+
+
 2/17 2차 세미나
  
     주제
