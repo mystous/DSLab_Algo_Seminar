@@ -38,6 +38,15 @@ public :
 		return image;
 	}
 
+	void setReal(double _real)
+	{
+		real = _real;
+	}
+	void setImage(double _image)
+	{
+		image = _image;
+	}
+
 	void OutComplex()
 	{
 		printf("%lf + %lf i\n", real, image);
@@ -75,7 +84,7 @@ struct _buf{
 	double n1Buffer[MAX_SIZE/2];
 };
 struct _buf buf; 
-
+Complex vecEle(0,0);
 int _tmain(int argc, _TCHAR* argv[])
 {
 
@@ -173,12 +182,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		readNum1=readNum0/2;
 	}
 	
-	int index0=0, index1=0;
+	//int index0=0, index1=0;
 	int t=0;
 	
 	for(int i=0 ; i<(matRow+1) ; i++) // 계산하는 횟수(행수 만큼 연산)
 	{
-		Complex vecEle(0,0);
+		
 		int j=0;
 		int cnt=0;	// 읽은 원소 갯수
 		int readCount1=fread(buf.n1Buffer,sizeof(double), MAX_SIZE/2, n1Matrix); //복소수이기 때문에 실수 허수 2개씩
@@ -246,8 +255,12 @@ int _tmain(int argc, _TCHAR* argv[])
 			Complex T = T1 * T2;
 			vecEle = vecEle + T;
 			*/		
+			
 		}
-		index1=0;
+		//index1=0;
+		vecEle.setImage(0.0);
+		vecEle.setReal(0.0);
+
 		_fseeki64(n1Matrix, 0, SEEK_SET);
 		readCount1=fread(buf.n1Buffer,sizeof(double), MAX_SIZE, n1Matrix);
 		
@@ -275,6 +288,10 @@ unsigned int WINAPI ThreadFunction(void *arg)
 	int pos0 = 4*matElement+2;
 	int pos1 = 2*matElement;
 	Complex T1(buf.mnBuffer[pos0],buf.mnBuffer[pos0+1]);
+	Complex T2(buf.n1Buffer[pos1],buf.n1Buffer[pos1+1]);
+	Complex T3 = T1 * T2;
+
+	//critical section 
 
 	printf("arg : %d \n", arg);
 
