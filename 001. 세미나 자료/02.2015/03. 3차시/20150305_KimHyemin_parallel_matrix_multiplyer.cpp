@@ -51,14 +51,16 @@ void mult_mat(Cnum* mat, Cnum* vec, Cnum* result, int index, int thread)
 
 	}
 
-	/*
-	for(int i=0; i<index; i++)
-	{
-	result[0].realnum += result[i].realnum;
-	result[0].imanum += result[i].imanum;
-	}
-	*/
+}
+void sum_mat(Cnum* result, int index)
+{
 
+
+	for(int i=1; i<index; i++)
+	{
+		result[0].realnum += result[i].realnum;
+		result[0].imanum += result[i].imanum;
+	}
 
 }
 
@@ -79,17 +81,7 @@ final_result[0].imanum+= result[i].imanum;
 }
 */
 
-void sum_mat(Cnum* result, int index)
-{
 
-
-	for(int i=1; i<index; i++)
-	{
-		result[0].realnum += result[i].realnum;
-		result[0].imanum += result[i].imanum;
-	}
-
-}
 
 
 
