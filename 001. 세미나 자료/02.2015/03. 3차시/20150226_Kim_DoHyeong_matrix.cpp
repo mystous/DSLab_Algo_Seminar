@@ -11,7 +11,7 @@
 using namespace std;
 
 #define MAX_SIZE 1024
-#define THREAD_N 2
+#define THREAD_N 64
 
 
 class Complex{
@@ -84,7 +84,10 @@ struct _buf{
 	double n1Buffer[MAX_SIZE/2];
 };
 struct _buf buf; 
-Complex vecEle(0,0);
+
+Complex	vecEle(0,0);
+HANDLE hMutex;
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 
@@ -185,6 +188,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//int index0=0, index1=0;
 	int t=0;
 	
+	hMutex = CreateMutex(NULL, FALSE, NULL);
 	for(int i=0 ; i<(matRow+1) ; i++) // 계산하는 횟수(행수 만큼 연산)
 	{
 		
@@ -202,10 +206,16 @@ int _tmain(int argc, _TCHAR* argv[])
 				threadList[threadCnt]=(HANDLE)_beginthreadex(NULL,0,ThreadFunction,(void *)cnt,0,0);
 			}
 			WaitForMultipleObjects(threadCnt,threadList,TRUE,INFINITE);
+
+			//printf("%d %lf %lf \n", i,vecEle.getReal(), vecEle.getImage());
+			
 			if(cnt == readCount1/2) //읽은 열수를 채운 경우
 			{
-				int remain = ((int)matCol+1) - colCnt;
+				int remain = ((int)matCol+1) - colCnt; //남은 열 수 
+				remain = remain*2; // 열 수 *2 : 벡터의 남은 실수와 허수
 				if(remain == 0){
+					//printf("%d\n",colCnt);
+					//getchar();
 					break;
 				}
 				else if(remain < (MAX_SIZE/2))//계산 하고 난 나머지 열 요소를 읽어냄
@@ -217,60 +227,24 @@ int _tmain(int argc, _TCHAR* argv[])
 					readCount1=fread(buf.n1Buffer,sizeof(double), (MAX_SIZE/2), n1Matrix);
 					readCount0=fread(buf.mnBuffer,sizeof(double), (readCount1*2), mnMatrix);
 				}
-				colCnt += readCount1;
+				colCnt += readCount1/2;		
 				cnt=0;
 			}
-			printf("test: %d %d \n",threadCnt, i);
-			/*
-			int pos0 = 4*index0+2;
-			int pos1 = 2*index1;
-			if(((pos0+2) > readCount0) && (readCount0!=0)){
-				index0=0;
-			 	pos0 = 4*index0+2;
-				readCount0=fread(buf.mnBuffer,sizeof(double), MAX_SIZE, mnMatrix);
-			}
-			
-				
-			if(((pos1+1) > readCount1) && (readCount1!=0) ){
-				index1=0;
-				pos1 = 2*index1;
-				readCount1=fread(buf.n1'Buffer,sizeof(double), MAX_SIZE, n1Matrix);
-			}
-			*/
-
-			
-			
-			/*
-			Complex T1(buf.mnBuffer[pos0],buf.mnBuffer[pos0+1]);
-			index0++;
-
-			Complex T2(buf.n1'Buffer[pos1],buf.n1'Buffer[pos1+1]);
-			index1++;		
-			
-			
-			for(int i=0 ; i<THREAD_N ; i++)
-			{
-				_beginthreadex(NULL,0,ThreadFunction,NULL,0,0);
-			}
-			Complex T = T1 * T2;
-			vecEle = vecEle + T;
-			*/		
-			
 		}
 		//index1=0;
-		vecEle.setImage(0.0);
-		vecEle.setReal(0.0);
+	
 
-		_fseeki64(n1Matrix, 0, SEEK_SET);
-		readCount1=fread(buf.n1Buffer,sizeof(double), MAX_SIZE, n1Matrix);
-		
+		_fseeki64(n1Matrix, 0, SEEK_SET);		
 		//파일 쓰기 
 		fprintf(outText,"%d %lf %lf \n", i,vecEle.getReal(), vecEle.getImage());
+		printf("%d %lf %lf \n", i,vecEle.getReal(), vecEle.getImage());
+		
 		double real = vecEle.getReal();
 		double image = vecEle.getImage();
 		fwrite(&real,sizeof(double),1,vecOut);
 		fwrite(&image,sizeof(double),1,vecOut);
-		
+		vecEle.setImage(0.0);
+		vecEle.setReal(0.0);
 	}
 	
 	end_time_measurement();
@@ -279,6 +253,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	fclose(n1Matrix);
 	fclose(outText);
 	fclose(vecOut);
+	CloseHandle(hMutex);
 	return 0;
 }
 
@@ -291,9 +266,9 @@ unsigned int WINAPI ThreadFunction(void *arg)
 	Complex T2(buf.n1Buffer[pos1],buf.n1Buffer[pos1+1]);
 	Complex T3 = T1 * T2;
 
-	//critical section 
-
-	printf("arg : %d \n", arg);
+	WaitForSingleObject(hMutex, INFINITE);	//critical section 
+	vecEle = vecEle + T3;
+	ReleaseMutex(hMutex);
 
 	return 0;
 }
