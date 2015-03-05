@@ -114,8 +114,8 @@ int main(int argc, char *argv[])
 	vec = fopen("vector_input.dat","rb");
 	end = fopen("vector_output.dat","wb");
 
-	/*
-	// exe input number °Ë»ç
+	
+	// exe input number ê²€ì‚¬
 	if (argc == 4 && atoi(argv[1]) && atoi(argv[2]))
 	printf("input = %d x %d, Thread = %d \n",atoi(argv[1]), atoi(argv[2]),atoi(argv[3]));
 	else
@@ -123,9 +123,9 @@ int main(int argc, char *argv[])
 	fputs("[Error] Not a correct input", stderr);
 	exit(1);
 	}
-	*/
+	
 
-	// ÆÄÀÏ À¯¹« °Ë»ç
+	// íŒŒì¼ ìœ ë¬´ ê²€ì‚¬
 
 	if(mat==NULL)
 	{
@@ -139,9 +139,9 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	start_time_measurement(); //½Ã°£ÃøÁ¤ ½ÃÀÛ
+	start_time_measurement(); //ì‹œê°„ì¸¡ì • ì‹œì‘
 
-	// ¸ÅÆ®¸¯½º Å©±â
+	// ë§¤íŠ¸ë¦­ìŠ¤ í¬ê¸°
 
 	int point;
 
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 	}
 	*/
 
-	// matrix.dat Çà ¿­°ª ºÎºĞ ¿À·ù °Ë»ç
+	// matrix.dat í–‰ ì—´ê°’ ë¶€ë¶„ ì˜¤ë¥˜ ê²€ì‚¬
 	if(mat_RC_data[4]-mat_RC_data[2]>1)
 	{
 		fputs("[ERROR] Matrix File ROW_DATA error", stderr);
@@ -196,45 +196,45 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	printf("ÀüÃ¼ ¿­ÀÇ °ª = %f\nÀüÃ¼ ÇàÀÇ °ª = %f \n", Row, Col);
+	printf("ì „ì²´ ì—´ì˜ ê°’ = %f\nì „ì²´ í–‰ì˜ ê°’ = %f \n", Row, Col);
 
-	//vec Çà·Ä Çà Å©±â
+	//vec í–‰ë ¬ í–‰ í¬ê¸°
 	fseek(vec,0,SEEK_END);
 	vec_row = ftell(vec)/(sizeof(double)*2);
-	printf("º¤ÅÍÇà·Ä Çà °ª = %f\n",vec_row);
+	printf("ë²¡í„°í–‰ë ¬ í–‰ ê°’ = %f\n",vec_row);
 
-	//Çà·Ä Å©±â°¡ ´Ù¸¦ ½Ã ¿À·ù ¸Ş¼¼Áö Ãâ·Â
+	//í–‰ë ¬ í¬ê¸°ê°€ ë‹¤ë¥¼ ì‹œ ì˜¤ë¥˜ ë©”ì„¸ì§€ ì¶œë ¥
 	if(Col!=vec_row)
 	{
 		fputs("[ERROR] Matrix and Vector are not same", stderr);
 		exit(1);
 	}
 
-	//Çà·Ä°ª ²¨³»¼­ ¿¬»ê
+	//í–‰ë ¬ê°’ êº¼ë‚´ì„œ ì—°ì‚°
 	j=0;
 	int button=0;
 
-	fseek(mat,0,SEEK_SET); //ÆÄÀÏ Æ÷ÀÎÅÍ À§Ä¡ ÃÊ±âÈ­
-	fseek(vec,0,SEEK_SET); //ÆÄÀÏ Æ÷ÀÎÅÍ À§Ä¡ ÃÊ±âÈ­
-	fseek(end,0,SEEK_SET); //ÆÄÀÏ Æ÷ÀÎÅÍ À§Ä¡ ÃÊ±âÈ­
+	fseek(mat,0,SEEK_SET); //íŒŒì¼ í¬ì¸í„° ìœ„ì¹˜ ì´ˆê¸°í™”
+	fseek(vec,0,SEEK_SET); //íŒŒì¼ í¬ì¸í„° ìœ„ì¹˜ ì´ˆê¸°í™”
+	fseek(end,0,SEEK_SET); //íŒŒì¼ í¬ì¸í„° ìœ„ì¹˜ ì´ˆê¸°í™”
 
 	for(int k=0; k<Row; k++)
 	{
-		//ÀÎµ¦½º ÃÊ±âÈ­
+		//ì¸ë±ìŠ¤ ì´ˆê¸°í™”
 		button =0;
 		j=0;
-		fseek(vec,0,SEEK_SET); //ÆÄÀÏ Æ÷ÀÎÅÍ À§Ä¡ ÃÊ±âÈ­
+		fseek(vec,0,SEEK_SET); //íŒŒì¼ í¬ì¸í„° ìœ„ì¹˜ ì´ˆê¸°í™”
 
-		//mat Çà·Ä °¡Á®¿Í¼­ mat_buf[]¿¡ ÀúÀå 100°³¾¿ -> ////vec ÇàÀÇ °¹¼ö¿¡ µû¶ó·Î ¼öÁ¤ÇØ¾ßÇÔ //// ÀÏ´ÜÀº 100°³´ÜÀ§·Î
+		//mat í–‰ë ¬ ê°€ì ¸ì™€ì„œ mat_buf[]ì— ì €ì¥ 100ê°œì”© -> ////vec í–‰ì˜ ê°¯ìˆ˜ì— ë”°ë¼ë¡œ ìˆ˜ì •í•´ì•¼í•¨ //// ì¼ë‹¨ì€ 100ê°œë‹¨ìœ„ë¡œ
 		for(int i=0; i<Col*4; i++)
 		{
 			fread(&main_buf[i], sizeof(double), 1, mat);
-			//printf("°ª : %f ", main_buf[i]);
+			//printf("ê°’ : %f ", main_buf[i]);
 
 			if(i>3 && i%4==0)
 				j++;
 
-			// ±¸Á¶Ã¼¿¡ °ªÀúÀå
+			// êµ¬ì¡°ì²´ì— ê°’ì €ì¥
 			if(button==2)
 				mat_buf[j].realnum=main_buf[i];
 			else if(button==3)
@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
 				button=0;
 		}
 
-		//vec Çà·Ä °¡Á®¿Í¼­ vec_buf[]¿¡ ÀúÀå
+		//vec í–‰ë ¬ ê°€ì ¸ì™€ì„œ vec_buf[]ì— ì €ì¥
 		j=0;
 
 		for(int y=0; y<Col*2; y++)
@@ -290,7 +290,7 @@ int main(int argc, char *argv[])
 
 	}
 	printf("Calculation Complete ");
-	end_time_measurement(); //½Ã°£ ÃøÁ¤ ³¡
+	end_time_measurement(); //ì‹œê°„ ì¸¡ì • ë
 
 	fclose(mat);
 	fclose(vec);
@@ -300,7 +300,7 @@ int main(int argc, char *argv[])
 	return 0;
 }
 /*
-// exe input number °Ë»ç
+// exe input number ê²€ì‚¬
 if (argc == 4 && atoi(argv[1]) && atoi(argv[2]))
 printf("input = %d x %d, Thread = %d \n",atoi(argv[1]), atoi(argv[2]),atoi(argv[3]));
 else
