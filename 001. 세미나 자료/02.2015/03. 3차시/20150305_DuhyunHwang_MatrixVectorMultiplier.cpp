@@ -257,7 +257,9 @@ void *thread_read(void *pt){
 	return 0;
 }
 
-void *thread_calc(void *pt){	int matrix_idx, vector_idx, output_idx;
+void *thread_calc(void *pt)
+{
+	int matrix_idx, vector_idx, output_idx;
 	matrix_idx = ((PT *)pt)->m_start_idx;
 	for (output_idx = ((PT *)pt)->m_start_idx; output_idx <= ((PT *)pt)->m_end_idx; output_idx++){
 		for (vector_idx = 0; vector_idx < size.vector.elem_num; vector_idx++){
@@ -268,4 +270,6 @@ void *thread_calc(void *pt){	int matrix_idx, vector_idx, output_idx;
 			matrix_idx++;
 		}
 	}
-	pthread_exit((void *)0);	return 0;}
+	pthread_exit((void *)0);
+	return 0;
+}
