@@ -59,15 +59,59 @@ void sum_mat(Cnum* result, int index)
 }
 */
 
-void sum_mat(Cnum* result, int index)
+Cnum sum_mat(Cnum* result, int index)
 {
+	Cnum final_result;
+	double real_sum = 0;
+	double real_sum_0 = 0;
+	double real_sum_1 = 0;
+	double real_sum_2 = 0;
+	double real_sum_3 = 0;
 
-	for(int i=1; i<index; i++)
+	double ima_sum = 0;
+	double ima_sum_0 = 0;
+	double ima_sum_1 = 0;
+	double ima_sum_2 = 0;
+	double ima_sum_3 = 0;
+	
+#pragma omp parallel
 	{
-		result[0].realnum += result[i].realnum;
-		result[0].imanum += result[i].imanum;
+		double real_thread_sum = 0;
+		double ima_thread_sum = 0;
+
+#pragma omp for 
+	for(int i=0; i<index; i++)
+	{
+		//result[0].realnum += result[i].realnum;
+		//result[0].imanum += result[i].imanum;
+		real_thread_sum += result[i].realnum;
+		ima_thread_sum += result[i].imanum;		
 	}
 
+	if(omp_get_thread_num()==0)
+		real_sum_0 = real_thread_sum;
+	else if(omp_get_thread_num()==1)
+		real_sum_1 = real_thread_sum;
+	else if(omp_get_thread_num()==2)
+		real_sum_2 = real_thread_sum;
+	else
+		real_sum_3 = real_thread_sum;
+	
+	if(omp_get_thread_num()==0)
+		ima_sum_0 = ima_thread_sum;
+	else if(omp_get_thread_num()==1)
+		ima_sum_1 = ima_thread_sum;
+	else if(omp_get_thread_num()==2)
+		ima_sum_2 = ima_thread_sum;
+	else
+		ima_sum_3 = ima_thread_sum;
+
+	}
+	real_sum = real_sum_0 + real_sum_1 + real_sum_2 + real_sum_3;
+	ima_sum = ima_sum_0 + ima_sum_1 + ima_sum_2 + ima_sum_3;
+	final_result.realnum = real_sum;
+	final_result.imanum = ima_sum;
+	return final_result;
 }
 
 /*
@@ -86,7 +130,6 @@ final_result[0].imanum+= result[i].imanum;
 
 }
 */
-
 
 
 
@@ -115,6 +158,8 @@ int main(int argc, char *argv[])
 
 	int		j=0;
 	int		thread=atoi(argv[3]);
+	
+	double  final_result[2];
 
 	mat = fopen("matrix.dat","rb");
 	vec = fopen("vector_input.dat","rb");
@@ -280,7 +325,7 @@ int main(int argc, char *argv[])
 		*/
 
 		mult_mat(mat_buf,vec_buf,result,(int)Col,thread);
-		sum_mat(result,(int)Col);
+		result[0]=sum_mat(result,(int)Col);
 
 		/*
 		for(int i=1; i<Col; i++)
@@ -288,7 +333,6 @@ int main(int argc, char *argv[])
 		result[0]=sum(result[0],result[i]);			
 		}
 		*/
-
 
 		fwrite(&result[0].realnum,sizeof(double),1,end);
 		fwrite(&result[0].imanum,sizeof(double),1,end);
