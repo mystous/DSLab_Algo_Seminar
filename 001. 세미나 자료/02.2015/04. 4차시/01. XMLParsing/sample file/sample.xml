@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+	<mode name="anything">
+	   <anyNamespace>
+	   </anyNamespace>
+	</mode>
+	<mode name="blessed-xhtml">
+		<namespace ns="http://www.w3.org/2000/svg">
+			<validate schema="http://www.w3.org/Graphics/SVG/1.1/rng/svg11.rng" useMode="svg-content">This is XML Test</validate>
+		</namespace>
+		<namespace ns="http://www.w3.org/1999/xhtml">
+		</namespace>
+	</mode>
+</rules>
