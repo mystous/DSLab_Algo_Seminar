@@ -15,18 +15,8 @@
 
 CChildView::CChildView()
 {
-	int				i;
-
-	srand(time(NULL));
-	SetCoordinate();
-	for (i = 0; i < 8; i++)
-	{
-		DISK			disk;
-		
-		disk.brush = RGB(rand() / 256, rand() / 256, rand() / 256);
-		disk.nSize = i + 1;
-		m_column[1].Push(disk);
-	}
+	InitDisk();
+	
 }
 
 CChildView::~CChildView()
@@ -90,6 +80,68 @@ void CChildView::DrawHanoi(CDC *pDC)
 {
 	AdjustPoint();
 	DrawHanoiBoard(pDC);
+	DrawDiskSection(pDC);
+}
+
+void CChildView::DrawDiskSection(CDC *pDC)
+{
+	int					i;
+
+	for (i = 0; i < 3; i++)
+		DrawColumn(pDC, &m_column[i], m_pointBarBottom[i], m_pointBarBottom[i]);
+}
+
+void CChildView::DrawColumn(CDC *pDC, CHanoiData *pHanoiData, CPoint pointTop, CPoint pointBottom)
+{
+	int						i, nSize = pHanoiData->GetSize();
+
+	for (i = 0; i < nSize; i++)
+	{
+		LPDISK		lpDisk = pHanoiData->GetDiskInfo(i);
+		CPoint		pointDiskBottom = pointBottom;
+
+		pointDiskBottom.Offset(0, -m_nDiskCircleHeight*i - 20);
+		DrawDisk(pDC, pointDiskBottom, lpDisk->nSize, lpDisk->brush);
+	}
+}
+
+void CChildView::DrawDisk(CDC *pDC, CPoint pointBottom, int nSizeStep, COLORREF color)
+{
+	CRect				rect[3];
+	CPoint				leftPt[2], rightPt[2];
+	CBrush				brushFill(color);
+	int					nHeightRatio = 2;
+
+	//leftPt[0].SetPoint(pointBottom.x - m_nDiskRadius * nSizeStep, pointBottom.y - m_nDiskCircleHeight * nSizeStep);
+	//rightPt[0].SetPoint(pointBottom.x + m_nDiskRadius * nSizeStep, pointBottom.y + m_nDiskCircleHeight * nSizeStep);
+	leftPt[0].SetPoint(pointBottom.x - m_nDiskRadius * nSizeStep, pointBottom.y - m_nDiskCircleHeight + m_nDiskCircleHeight * nSizeStep);
+	rightPt[0].SetPoint(pointBottom.x + m_nDiskRadius * nSizeStep, pointBottom.y + m_nDiskCircleHeight - m_nDiskCircleHeight * nSizeStep);
+	rect[0].SetRect(leftPt[0].x, leftPt[0].y, rightPt[0].x, rightPt[0].y);
+
+	pDC->Ellipse(rect[0]);
+	//pDC->FillSolidRect(rect[0], color);
+/*
+		leftPt[1].SetPoint(m_pointBarTop[i].x - m_nBarWidth / 2, m_pointBarTop[i].y - m_nBarCircleHeight / 2);
+		rightPt[1].SetPoint(m_pointBarTop[i].x + m_nBarWidth / 2, m_pointBarTop[i].y + m_nBarCircleHeight / 2);
+		rect[1].SetRect(leftPt[1].x, leftPt[1].y, rightPt[1].x, rightPt[1].y);
+
+		leftPt[0].Offset(0, m_nBarCircleHeight / 2);
+		rightPt[0].Offset(-1, -m_nBarCircleHeight / 2);
+
+		leftPt[1].Offset(0, m_nBarCircleHeight / 2);
+		rightPt[1].Offset(-1, -m_nBarCircleHeight / 2);
+
+		rect[2].SetRect(leftPt[0].x, leftPt[0].y, rightPt[1].x, rightPt[1].y);
+
+		pDC->FillRect(rect[2], &brushFill);
+
+		pDC->Arc(rect[0], leftPt[0], rightPt[0]);
+		pDC->Ellipse(rect[1]);
+
+		pDC->MoveTo(leftPt[0]);
+		pDC->LineTo(leftPt[1]);
+		pDC->MoveTo(rightPt[0]);
+		pDC->LineTo(rightPt[1]);*/
 }
 
 void CChildView::DrawHanoiBoard(CDC *pDC)
@@ -164,6 +216,7 @@ void CChildView::AdjustPoint()
 	ConvertScalar(m_nBarCircleHeight, fYRatio);
 	ConvertScalar(m_nDiskHeight, fYRatio);
 	ConvertScalar(m_nDiskRadius, fXRatio);
+	ConvertScalar(m_nDiskCircleHeight, fYRatio);
 
 	for (i = 0; i < 3; i++)
 	{
@@ -194,7 +247,8 @@ void CChildView::SetCoordinate()
 	m_nBarCircleHeight = 3;
 	m_nBarHeight = 50;
 	m_nDiskRadius = 1;
-	m_nDiskHeight = 3;
+	m_nDiskHeight = 2;
+	m_nDiskCircleHeight = 1;
 
 	m_pointBarBottom[0].SetPoint(33, 75);
 	m_pointBarBottom[1] = m_pointBarBottom[0];
@@ -233,5 +287,26 @@ void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
 
+	CHanoiData::ChangeBar(&m_column[0], &m_column[1], &m_column[2]);
+	Invalidate();
+
 	CWnd::OnLButtonDown(nFlags, point);
+}
+
+
+void CChildView::InitDisk()
+{
+	int				i, j;
+
+	srand(time(NULL));
+	SetCoordinate();
+	for (j = 0; j < 3;j++)
+	for (i = 8; i > 0 ; i--)
+	{
+		DISK			disk;
+
+		disk.brush = RGB(rand() / 256, rand() / 256, rand() / 256);
+		disk.nSize = i ;
+		m_column[j].Push(disk);
+	}
 }

@@ -24,3 +24,7 @@ void CHanoiData::Push(DISK disk)
 {
 	m_vectorColumn.push_back(disk);
 }
+
+void CHanoiData::ChangeBar(CHanoiData* pColumLeft, CHanoiData* pColumnCenter, CHanoiData* pColumnRight)
+{
+}
