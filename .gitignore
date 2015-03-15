@@ -37,6 +37,9 @@ Icon
 .Trashes
 [Rr]ealse
 [Dd]ebug
+ipch
 *.ich
 *.sdf
 *.opensdf
+*.suo
+*.aps

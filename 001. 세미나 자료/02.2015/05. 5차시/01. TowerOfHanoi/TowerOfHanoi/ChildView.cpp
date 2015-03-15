@@ -15,7 +15,18 @@
 
 CChildView::CChildView()
 {
+	int				i;
+
+	srand(time(NULL));
 	SetCoordinate();
+	for (i = 0; i < 8; i++)
+	{
+		DISK			disk;
+		
+		disk.brush = RGB(rand() / 256, rand() / 256, rand() / 256);
+		disk.nSize = i + 1;
+		m_column[1].Push(disk);
+	}
 }
 
 CChildView::~CChildView()
@@ -26,6 +37,7 @@ CChildView::~CChildView()
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
 	ON_WM_SIZE()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
@@ -123,7 +135,6 @@ void CChildView::DrawHanoiBoard(CDC *pDC)
 		pDC->LineTo(leftPt[1]);
 		pDC->MoveTo(rightPt[0]);
 		pDC->LineTo(rightPt[1]);
-		
 	}
 }
 
@@ -151,6 +162,8 @@ void CChildView::AdjustPoint()
 
 	ConvertScalar(m_nBarWidth, fXRatio);
 	ConvertScalar(m_nBarCircleHeight, fYRatio);
+	ConvertScalar(m_nDiskHeight, fYRatio);
+	ConvertScalar(m_nDiskRadius, fXRatio);
 
 	for (i = 0; i < 3; i++)
 	{
@@ -180,6 +193,8 @@ void CChildView::SetCoordinate()
 	m_nBarWidth = 2;
 	m_nBarCircleHeight = 3;
 	m_nBarHeight = 50;
+	m_nDiskRadius = 1;
+	m_nDiskHeight = 3;
 
 	m_pointBarBottom[0].SetPoint(33, 75);
 	m_pointBarBottom[1] = m_pointBarBottom[0];
@@ -211,4 +226,12 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 
 	SetCoordinate();
 	Invalidate();
+}
+
+
+void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+
+	CWnd::OnLButtonDown(nFlags, point);
 }

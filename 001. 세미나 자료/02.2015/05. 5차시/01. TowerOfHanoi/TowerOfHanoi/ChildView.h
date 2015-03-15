@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "HanoiData.h"
 
 // CChildView window
 
@@ -23,9 +24,10 @@ protected:
 	CPoint		m_pointBasePointRightTop;
 	CPoint		m_pointFloorPointRight;
 	CPoint		m_pointFloorPointLeft;
-	int			m_nBarWidth, m_nBarHeight, m_nBarCircleHeight;
+	int			m_nBarWidth, m_nBarHeight, m_nBarCircleHeight, m_nDiskRadius, m_nDiskHeight;
 	CPoint		m_pointBarBottom[3];
 	CPoint		m_pointBarTop[3];
+	CHanoiData	m_column[3];
 
 // Operations
 public:
@@ -52,5 +54,6 @@ protected:
 	void SetCoordinate();
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
