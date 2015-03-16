@@ -24,6 +24,7 @@ protected:
 	CPoint		m_pointBasePointRightTop;
 	CPoint		m_pointFloorPointRight;
 	CPoint		m_pointFloorPointLeft;
+	int			m_nAdjustValue;
 	int			m_nBarWidth, m_nBarHeight, m_nBarCircleHeight, m_nDiskRadius, m_nDiskHeight, m_nDiskCircleHeight;
 	CPoint		m_pointBarBottom[3];
 	CPoint		m_pointBarTop[3];
@@ -51,6 +52,7 @@ protected:
 	void DrawDiskSection(CDC *pDC);
 	void DrawColumn(CDC *pDC, CHanoiData *pHanoiData, CPoint pointTop, CPoint pointBottom);
 	void DrawDisk(CDC *pDC, CPoint pointBottom, int nSizeStep, COLORREF color);
+	void DrawDiskTop(CDC *pDC, CPoint pointBottom, int nSizeStep);
 	void ConvertPoint(CPoint &point, double fXRatio, double fYRatio);
 	void ConvertScalar(int &nScalar, double fRatio);
 	void AdjustPoint();
@@ -59,5 +61,7 @@ protected:
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
 };
 
